@@ -44,6 +44,12 @@ sh -c "aws s3 sync ${SOURCE_DIR:-.} s3://${AWS_S3_BUCKET}/${DEST_DIR} \
               --no-progress \
               ${ENDPOINT_APPEND} $*"
 
+
+# Now, override all HTML files, uploading them without extension, and with the right content-type
+for file in $(find ${SOURCE_DIR} -name '*.html' | sed 's|^\./||'); do
+    aws s3 cp ${file%} s3://${AWS_S3_BUCKET}/${file%.*} --content-type 'text/html'
+done
+
 # Clear out credentials after we're done.
 # We need to re-run `aws configure` with bogus input instead of
 # deleting ~/.aws in case there are other credentials living there.
