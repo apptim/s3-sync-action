@@ -1,7 +1,10 @@
-# GitHub Action to Sync S3 Bucket 🔄
+# GitHub Action to Sync S3 Bucket 🔄 (Apptim Fork)
 
 This simple action uses the [vanilla AWS CLI](https://docs.aws.amazon.com/cli/index.html) to sync a directory (either from your repository or generated during your workflow) with a remote S3 bucket.
 
+🌵 This action adds two features when synching s3: 
+- Uploads all HTML files wihtout .html extension (duplicating files)
+- Adds the needed 'content-type=text/html' metadata that enable browsers displaying those files with no extension as HTML.
 
 ## Usage
 
