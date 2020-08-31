@@ -47,7 +47,9 @@ sh -c "aws s3 sync ${SOURCE_DIR:-.} s3://${AWS_S3_BUCKET}/${DEST_DIR} \
 
 # Now, override all HTML files, uploading them without extension, and with the right content-type
 for file in $(find ${SOURCE_DIR} -name '*.html' | sed 's|^\./||'); do
-    aws s3 cp ${file%} s3://${AWS_S3_BUCKET}/${file%.*} --content-type 'text/html'
+    PATH_NO_EXT=${file%.*}
+    PATH_CLEAN=${PATH_NO_EXT#${SOURCE_DIR}}
+    aws s3 cp ${file%} s3://${AWS_S3_BUCKET}/${PATH_CLEAN} --profile s3-sync-action --content-type 'text/html'
 done
 
 # Clear out credentials after we're done.
